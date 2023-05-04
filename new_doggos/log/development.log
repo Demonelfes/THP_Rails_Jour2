@@ -1,0 +1,1112 @@
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "cities"[0m
+  [1m[35m (2.5ms)[0m  [1m[35mCREATE TABLE "cities" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "dogs"[0m
+  [1m[35m (2.3ms)[0m  [1m[35mCREATE TABLE "dogs" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "city_id" integer)[0m
+  [1m[35m (2.3ms)[0m  [1m[35mCREATE INDEX "index_dogs_on_city_id" ON "dogs" ("city_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "dogsitters"[0m
+  [1m[35m (1.9ms)[0m  [1m[35mCREATE TABLE "dogsitters" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "city_id" integer)[0m
+  [1m[35m (2.7ms)[0m  [1m[35mCREATE INDEX "index_dogsitters_on_city_id" ON "dogsitters" ("city_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "strolls"[0m
+  [1m[35m (2.0ms)[0m  [1m[35mCREATE TABLE "strolls" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "dog_id" integer, "dogsitter_id" integer)[0m
+  [1m[35m (1.9ms)[0m  [1m[35mCREATE INDEX "index_strolls_on_dog_id" ON "strolls" ("dog_id")[0m
+  [1m[35m (6.7ms)[0m  [1m[35mCREATE INDEX "index_strolls_on_dogsitter_id" ON "strolls" ("dogsitter_id")[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TEMPORARY TABLE "adogs" ("id" integer NOT NULL PRIMARY KEY, "name" varchar DEFAULT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "city_id" integer DEFAULT NULL)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE INDEX "tindex_adogs_on_city_id" ON "adogs" ("city_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[32mINSERT INTO "adogs" ("id","name","created_at","updated_at","city_id")
+                     SELECT "id","name","created_at","updated_at","city_id" FROM "dogs"[0m
+  [1m[35m (0.6ms)[0m  [1m[35mDROP TABLE "dogs"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "dogs" ("id" integer NOT NULL PRIMARY KEY, "name" varchar DEFAULT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "city_id" integer DEFAULT NULL, CONSTRAINT "fk_rails_84c3bc7ee8"
+FOREIGN KEY ("city_id")
+  REFERENCES "cities" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_dogs_on_city_id" ON "dogs" ("city_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "dogs" ("id","name","created_at","updated_at","city_id")
+                     SELECT "id","name","created_at","updated_at","city_id" FROM "adogs"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "adogs"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (1.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TEMPORARY TABLE "adogsitters" ("id" integer NOT NULL PRIMARY KEY, "name" varchar DEFAULT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "city_id" integer DEFAULT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_adogsitters_on_city_id" ON "adogsitters" ("city_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "adogsitters" ("id","name","created_at","updated_at","city_id")
+                     SELECT "id","name","created_at","updated_at","city_id" FROM "dogsitters"[0m
+  [1m[35m (0.5ms)[0m  [1m[35mDROP TABLE "dogsitters"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "dogsitters" ("id" integer NOT NULL PRIMARY KEY, "name" varchar DEFAULT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "city_id" integer DEFAULT NULL, CONSTRAINT "fk_rails_b74901ccb9"
+FOREIGN KEY ("city_id")
+  REFERENCES "cities" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_dogsitters_on_city_id" ON "dogsitters" ("city_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "dogsitters" ("id","name","created_at","updated_at","city_id")
+                     SELECT "id","name","created_at","updated_at","city_id" FROM "adogsitters"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "adogsitters"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (2.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TEMPORARY TABLE "astrolls" ("id" integer NOT NULL PRIMARY KEY, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "dog_id" integer DEFAULT NULL, "dogsitter_id" integer DEFAULT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_astrolls_on_dogsitter_id" ON "astrolls" ("dogsitter_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_astrolls_on_dog_id" ON "astrolls" ("dog_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "astrolls" ("id","created_at","updated_at","dog_id","dogsitter_id")
+                     SELECT "id","created_at","updated_at","dog_id","dogsitter_id" FROM "strolls"[0m
+  [1m[35m (0.6ms)[0m  [1m[35mDROP TABLE "strolls"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "strolls" ("id" integer NOT NULL PRIMARY KEY, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "dog_id" integer DEFAULT NULL, "dogsitter_id" integer DEFAULT NULL, CONSTRAINT "fk_rails_f5b9745d22"
+FOREIGN KEY ("dog_id")
+  REFERENCES "dogs" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_strolls_on_dog_id" ON "strolls" ("dog_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_strolls_on_dogsitter_id" ON "strolls" ("dogsitter_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "strolls" ("id","created_at","updated_at","dog_id","dogsitter_id")
+                     SELECT "id","created_at","updated_at","dog_id","dogsitter_id" FROM "astrolls"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "astrolls"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (2.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TEMPORARY TABLE "astrolls" ("id" integer NOT NULL PRIMARY KEY, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "dog_id" integer DEFAULT NULL, "dogsitter_id" integer DEFAULT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_astrolls_on_dogsitter_id" ON "astrolls" ("dogsitter_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_astrolls_on_dog_id" ON "astrolls" ("dog_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "astrolls" ("id","created_at","updated_at","dog_id","dogsitter_id")
+                     SELECT "id","created_at","updated_at","dog_id","dogsitter_id" FROM "strolls"[0m
+  [1m[35m (0.7ms)[0m  [1m[35mDROP TABLE "strolls"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "strolls" ("id" integer NOT NULL PRIMARY KEY, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "dog_id" integer DEFAULT NULL, "dogsitter_id" integer DEFAULT NULL, CONSTRAINT "fk_rails_f5b9745d22"
+FOREIGN KEY ("dog_id")
+  REFERENCES "dogs" ("id")
+, CONSTRAINT "fk_rails_191ec17721"
+FOREIGN KEY ("dogsitter_id")
+  REFERENCES "dogsitters" ("id")
+)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE INDEX "index_strolls_on_dog_id" ON "strolls" ("dog_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_strolls_on_dogsitter_id" ON "strolls" ("dogsitter_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "strolls" ("id","created_at","updated_at","dog_id","dogsitter_id")
+                     SELECT "id","created_at","updated_at","dog_id","dogsitter_id" FROM "astrolls"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "astrolls"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (2.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (4.5ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (2.6ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (20230504132749)[0m
+  [1m[35m (3.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES
+(20230504125855),
+(20230504125905),
+(20230504125913),
+(20230504130016);
+
+[0m
+  [1m[35m (5.4ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.4ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "development"], ["created_at", "2023-05-04 19:35:40.734527"], ["updated_at", "2023-05-04 19:35:40.734527"]]
+  [1m[36mTRANSACTION (2.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "schema_sha1"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.4ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "schema_sha1"], ["value", "1f5d0c2e6e01c98799cd74c813df34ab2d73abb7"], ["created_at", "2023-05-04 19:35:40.743183"], ["updated_at", "2023-05-04 19:35:40.743183"]]
+  [1m[36mTRANSACTION (1.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "cities"[0m
+  [1m[35m (2.0ms)[0m  [1m[35mCREATE TABLE "cities" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "dogs"[0m
+  [1m[35m (2.5ms)[0m  [1m[35mCREATE TABLE "dogs" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "city_id" integer)[0m
+  [1m[35m (2.2ms)[0m  [1m[35mCREATE INDEX "index_dogs_on_city_id" ON "dogs" ("city_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "dogsitters"[0m
+  [1m[35m (2.4ms)[0m  [1m[35mCREATE TABLE "dogsitters" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "city_id" integer)[0m
+  [1m[35m (2.2ms)[0m  [1m[35mCREATE INDEX "index_dogsitters_on_city_id" ON "dogsitters" ("city_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "strolls"[0m
+  [1m[35m (2.4ms)[0m  [1m[35mCREATE TABLE "strolls" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "dog_id" integer, "dogsitter_id" integer)[0m
+  [1m[35m (2.6ms)[0m  [1m[35mCREATE INDEX "index_strolls_on_dog_id" ON "strolls" ("dog_id")[0m
+  [1m[35m (2.3ms)[0m  [1m[35mCREATE INDEX "index_strolls_on_dogsitter_id" ON "strolls" ("dogsitter_id")[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TEMPORARY TABLE "adogs" ("id" integer NOT NULL PRIMARY KEY, "name" varchar DEFAULT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "city_id" integer DEFAULT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_adogs_on_city_id" ON "adogs" ("city_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "adogs" ("id","name","created_at","updated_at","city_id")
+                     SELECT "id","name","created_at","updated_at","city_id" FROM "dogs"[0m
+  [1m[35m (0.6ms)[0m  [1m[35mDROP TABLE "dogs"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "dogs" ("id" integer NOT NULL PRIMARY KEY, "name" varchar DEFAULT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "city_id" integer DEFAULT NULL, CONSTRAINT "fk_rails_84c3bc7ee8"
+FOREIGN KEY ("city_id")
+  REFERENCES "cities" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_dogs_on_city_id" ON "dogs" ("city_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "dogs" ("id","name","created_at","updated_at","city_id")
+                     SELECT "id","name","created_at","updated_at","city_id" FROM "adogs"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "adogs"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (1.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TEMPORARY TABLE "adogsitters" ("id" integer NOT NULL PRIMARY KEY, "name" varchar DEFAULT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "city_id" integer DEFAULT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_adogsitters_on_city_id" ON "adogsitters" ("city_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "adogsitters" ("id","name","created_at","updated_at","city_id")
+                     SELECT "id","name","created_at","updated_at","city_id" FROM "dogsitters"[0m
+  [1m[35m (1.7ms)[0m  [1m[35mDROP TABLE "dogsitters"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "dogsitters" ("id" integer NOT NULL PRIMARY KEY, "name" varchar DEFAULT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "city_id" integer DEFAULT NULL, CONSTRAINT "fk_rails_b74901ccb9"
+FOREIGN KEY ("city_id")
+  REFERENCES "cities" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_dogsitters_on_city_id" ON "dogsitters" ("city_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "dogsitters" ("id","name","created_at","updated_at","city_id")
+                     SELECT "id","name","created_at","updated_at","city_id" FROM "adogsitters"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "adogsitters"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (1.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TEMPORARY TABLE "astrolls" ("id" integer NOT NULL PRIMARY KEY, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "dog_id" integer DEFAULT NULL, "dogsitter_id" integer DEFAULT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_astrolls_on_dogsitter_id" ON "astrolls" ("dogsitter_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_astrolls_on_dog_id" ON "astrolls" ("dog_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "astrolls" ("id","created_at","updated_at","dog_id","dogsitter_id")
+                     SELECT "id","created_at","updated_at","dog_id","dogsitter_id" FROM "strolls"[0m
+  [1m[35m (0.6ms)[0m  [1m[35mDROP TABLE "strolls"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "strolls" ("id" integer NOT NULL PRIMARY KEY, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "dog_id" integer DEFAULT NULL, "dogsitter_id" integer DEFAULT NULL, CONSTRAINT "fk_rails_f5b9745d22"
+FOREIGN KEY ("dog_id")
+  REFERENCES "dogs" ("id")
+)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE INDEX "index_strolls_on_dog_id" ON "strolls" ("dog_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_strolls_on_dogsitter_id" ON "strolls" ("dogsitter_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "strolls" ("id","created_at","updated_at","dog_id","dogsitter_id")
+                     SELECT "id","created_at","updated_at","dog_id","dogsitter_id" FROM "astrolls"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE "astrolls"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (2.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TEMPORARY TABLE "astrolls" ("id" integer NOT NULL PRIMARY KEY, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "dog_id" integer DEFAULT NULL, "dogsitter_id" integer DEFAULT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_astrolls_on_dogsitter_id" ON "astrolls" ("dogsitter_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_astrolls_on_dog_id" ON "astrolls" ("dog_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "astrolls" ("id","created_at","updated_at","dog_id","dogsitter_id")
+                     SELECT "id","created_at","updated_at","dog_id","dogsitter_id" FROM "strolls"[0m
+  [1m[35m (0.5ms)[0m  [1m[35mDROP TABLE "strolls"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "strolls" ("id" integer NOT NULL PRIMARY KEY, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "dog_id" integer DEFAULT NULL, "dogsitter_id" integer DEFAULT NULL, CONSTRAINT "fk_rails_f5b9745d22"
+FOREIGN KEY ("dog_id")
+  REFERENCES "dogs" ("id")
+, CONSTRAINT "fk_rails_191ec17721"
+FOREIGN KEY ("dogsitter_id")
+  REFERENCES "dogsitters" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_strolls_on_dog_id" ON "strolls" ("dog_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_strolls_on_dogsitter_id" ON "strolls" ("dogsitter_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "strolls" ("id","created_at","updated_at","dog_id","dogsitter_id")
+                     SELECT "id","created_at","updated_at","dog_id","dogsitter_id" FROM "astrolls"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "astrolls"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (1.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (2.2ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (2.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (20230504132749)[0m
+  [1m[35m (2.9ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES
+(20230504125855),
+(20230504125905),
+(20230504125913),
+(20230504130016);
+
+[0m
+  [1m[35m (2.4ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.4ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "development"], ["created_at", "2023-05-04 19:35:40.878427"], ["updated_at", "2023-05-04 19:35:40.878427"]]
+  [1m[36mTRANSACTION (2.4ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Update (0.4ms)[0m  [1m[33mUPDATE "ar_internal_metadata" SET "value" = ?, "updated_at" = ? WHERE "ar_internal_metadata"."key" = ?[0m  [["value", "test"], ["updated_at", "2023-05-04 19:35:40.885436"], ["key", "environment"]]
+  [1m[36mTRANSACTION (1.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "schema_sha1"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.6ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "schema_sha1"], ["value", "1f5d0c2e6e01c98799cd74c813df34ab2d73abb7"], ["created_at", "2023-05-04 19:35:40.892130"], ["updated_at", "2023-05-04 19:35:40.892130"]]
+  [1m[36mTRANSACTION (1.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCity Create (1.9ms)[0m  [1m[32mINSERT INTO "cities" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Grimesfort"], ["created_at", "2023-05-04 19:35:42.988305"], ["updated_at", "2023-05-04 19:35:42.988305"]]
+  [1m[36mTRANSACTION (1.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCity Create (0.4ms)[0m  [1m[32mINSERT INTO "cities" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Tysonshire"], ["created_at", "2023-05-04 19:35:42.996922"], ["updated_at", "2023-05-04 19:35:42.996922"]]
+  [1m[36mTRANSACTION (1.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCity Create (0.4ms)[0m  [1m[32mINSERT INTO "cities" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Glennaton"], ["created_at", "2023-05-04 19:35:43.002667"], ["updated_at", "2023-05-04 19:35:43.002667"]]
+  [1m[36mTRANSACTION (2.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCity Create (0.4ms)[0m  [1m[32mINSERT INTO "cities" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Wisokyport"], ["created_at", "2023-05-04 19:35:43.008317"], ["updated_at", "2023-05-04 19:35:43.008317"]]
+  [1m[36mTRANSACTION (3.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mCity Load (0.2ms)[0m  [1m[34mSELECT "cities".* FROM "cities"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mDog Create (0.4ms)[0m  [1m[32mINSERT INTO "dogs" ("name", "created_at", "updated_at", "city_id") VALUES (?, ?, ?, ?)[0m  [["name", "Dr. Lorretta Williamson"], ["created_at", "2023-05-04 19:35:43.044229"], ["updated_at", "2023-05-04 19:35:43.044229"], ["city_id", 4]]
+  [1m[36mTRANSACTION (1.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mCity Load (0.1ms)[0m  [1m[34mSELECT "cities".* FROM "cities"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mDog Create (1.9ms)[0m  [1m[32mINSERT INTO "dogs" ("name", "created_at", "updated_at", "city_id") VALUES (?, ?, ?, ?)[0m  [["name", "Andre O'Hara"], ["created_at", "2023-05-04 19:35:43.050498"], ["updated_at", "2023-05-04 19:35:43.050498"], ["city_id", 1]]
+  [1m[36mTRANSACTION (2.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mCity Load (0.1ms)[0m  [1m[34mSELECT "cities".* FROM "cities"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mDog Create (0.4ms)[0m  [1m[32mINSERT INTO "dogs" ("name", "created_at", "updated_at", "city_id") VALUES (?, ?, ?, ?)[0m  [["name", "Jerry Kertzmann"], ["created_at", "2023-05-04 19:35:43.059151"], ["updated_at", "2023-05-04 19:35:43.059151"], ["city_id", 1]]
+  [1m[36mTRANSACTION (2.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mCity Load (0.2ms)[0m  [1m[34mSELECT "cities".* FROM "cities"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mDog Create (0.4ms)[0m  [1m[32mINSERT INTO "dogs" ("name", "created_at", "updated_at", "city_id") VALUES (?, ?, ?, ?)[0m  [["name", "Ross Ziemann"], ["created_at", "2023-05-04 19:35:43.066245"], ["updated_at", "2023-05-04 19:35:43.066245"], ["city_id", 4]]
+  [1m[36mTRANSACTION (1.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mCity Load (0.1ms)[0m  [1m[34mSELECT "cities".* FROM "cities"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mDog Create (0.4ms)[0m  [1m[32mINSERT INTO "dogs" ("name", "created_at", "updated_at", "city_id") VALUES (?, ?, ?, ?)[0m  [["name", "Collin Christiansen"], ["created_at", "2023-05-04 19:35:43.073107"], ["updated_at", "2023-05-04 19:35:43.073107"], ["city_id", 2]]
+  [1m[36mTRANSACTION (1.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mCity Load (0.1ms)[0m  [1m[34mSELECT "cities".* FROM "cities"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mDog Create (0.4ms)[0m  [1m[32mINSERT INTO "dogs" ("name", "created_at", "updated_at", "city_id") VALUES (?, ?, ?, ?)[0m  [["name", "Azalee Volkman"], ["created_at", "2023-05-04 19:35:43.079363"], ["updated_at", "2023-05-04 19:35:43.079363"], ["city_id", 4]]
+  [1m[36mTRANSACTION (2.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mCity Load (0.2ms)[0m  [1m[34mSELECT "cities".* FROM "cities"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mDog Create (0.5ms)[0m  [1m[32mINSERT INTO "dogs" ("name", "created_at", "updated_at", "city_id") VALUES (?, ?, ?, ?)[0m  [["name", "Eleonore Kunde"], ["created_at", "2023-05-04 19:35:43.086551"], ["updated_at", "2023-05-04 19:35:43.086551"], ["city_id", 2]]
+  [1m[36mTRANSACTION (2.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mCity Load (0.1ms)[0m  [1m[34mSELECT "cities".* FROM "cities"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mDog Create (0.4ms)[0m  [1m[32mINSERT INTO "dogs" ("name", "created_at", "updated_at", "city_id") VALUES (?, ?, ?, ?)[0m  [["name", "Justa Bartoletti"], ["created_at", "2023-05-04 19:35:43.093492"], ["updated_at", "2023-05-04 19:35:43.093492"], ["city_id", 3]]
+  [1m[36mTRANSACTION (2.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mCity Load (0.1ms)[0m  [1m[34mSELECT "cities".* FROM "cities"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mDog Create (0.4ms)[0m  [1m[32mINSERT INTO "dogs" ("name", "created_at", "updated_at", "city_id") VALUES (?, ?, ?, ?)[0m  [["name", "Gerardo Wilderman"], ["created_at", "2023-05-04 19:35:43.101031"], ["updated_at", "2023-05-04 19:35:43.101031"], ["city_id", 4]]
+  [1m[36mTRANSACTION (1.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mCity Load (0.1ms)[0m  [1m[34mSELECT "cities".* FROM "cities"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mDog Create (0.4ms)[0m  [1m[32mINSERT INTO "dogs" ("name", "created_at", "updated_at", "city_id") VALUES (?, ?, ?, ?)[0m  [["name", "Lilly Collins"], ["created_at", "2023-05-04 19:35:43.107571"], ["updated_at", "2023-05-04 19:35:43.107571"], ["city_id", 2]]
+  [1m[36mTRANSACTION (2.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mCity Load (0.1ms)[0m  [1m[34mSELECT "cities".* FROM "cities"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mDogsitter Create (0.4ms)[0m  [1m[32mINSERT INTO "dogsitters" ("name", "created_at", "updated_at", "city_id") VALUES (?, ?, ?, ?)[0m  [["name", "Lorna Cummings"], ["created_at", "2023-05-04 19:35:43.122596"], ["updated_at", "2023-05-04 19:35:43.122596"], ["city_id", 2]]
+  [1m[36mTRANSACTION (2.4ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mCity Load (0.1ms)[0m  [1m[34mSELECT "cities".* FROM "cities"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mDogsitter Create (0.4ms)[0m  [1m[32mINSERT INTO "dogsitters" ("name", "created_at", "updated_at", "city_id") VALUES (?, ?, ?, ?)[0m  [["name", "Nanci Lang PhD"], ["created_at", "2023-05-04 19:35:43.140905"], ["updated_at", "2023-05-04 19:35:43.140905"], ["city_id", 2]]
+  [1m[36mTRANSACTION (2.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mCity Load (0.1ms)[0m  [1m[34mSELECT "cities".* FROM "cities"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mDogsitter Create (1.4ms)[0m  [1m[32mINSERT INTO "dogsitters" ("name", "created_at", "updated_at", "city_id") VALUES (?, ?, ?, ?)[0m  [["name", "Billye Treutel"], ["created_at", "2023-05-04 19:35:43.148985"], ["updated_at", "2023-05-04 19:35:43.148985"], ["city_id", 1]]
+  [1m[36mTRANSACTION (2.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mCity Load (0.1ms)[0m  [1m[34mSELECT "cities".* FROM "cities"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mDogsitter Create (0.4ms)[0m  [1m[32mINSERT INTO "dogsitters" ("name", "created_at", "updated_at", "city_id") VALUES (?, ?, ?, ?)[0m  [["name", "Alfonso Dare Esq."], ["created_at", "2023-05-04 19:35:43.158197"], ["updated_at", "2023-05-04 19:35:43.158197"], ["city_id", 4]]
+  [1m[36mTRANSACTION (1.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mCity Load (0.1ms)[0m  [1m[34mSELECT "cities".* FROM "cities"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mDogsitter Create (0.4ms)[0m  [1m[32mINSERT INTO "dogsitters" ("name", "created_at", "updated_at", "city_id") VALUES (?, ?, ?, ?)[0m  [["name", "Sen. Cassi Hand"], ["created_at", "2023-05-04 19:35:43.165050"], ["updated_at", "2023-05-04 19:35:43.165050"], ["city_id", 2]]
+  [1m[36mTRANSACTION (2.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mDog Load (0.2ms)[0m  [1m[34mSELECT "dogs".* FROM "dogs"[0m
+  [1m[36mDogsitter Load (0.1ms)[0m  [1m[34mSELECT "dogsitters".* FROM "dogsitters"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStroll Create (0.5ms)[0m  [1m[32mINSERT INTO "strolls" ("created_at", "updated_at", "dog_id", "dogsitter_id") VALUES (?, ?, ?, ?)[0m  [["created_at", "2023-05-04 19:35:43.186552"], ["updated_at", "2023-05-04 19:35:43.186552"], ["dog_id", 9], ["dogsitter_id", 1]]
+  [1m[36mTRANSACTION (2.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mDog Load (0.1ms)[0m  [1m[34mSELECT "dogs".* FROM "dogs"[0m
+  [1m[36mDogsitter Load (0.1ms)[0m  [1m[34mSELECT "dogsitters".* FROM "dogsitters"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStroll Create (0.5ms)[0m  [1m[32mINSERT INTO "strolls" ("created_at", "updated_at", "dog_id", "dogsitter_id") VALUES (?, ?, ?, ?)[0m  [["created_at", "2023-05-04 19:35:43.194261"], ["updated_at", "2023-05-04 19:35:43.194261"], ["dog_id", 10], ["dogsitter_id", 4]]
+  [1m[36mTRANSACTION (1.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mDog Load (0.2ms)[0m  [1m[34mSELECT "dogs".* FROM "dogs"[0m
+  [1m[36mDogsitter Load (0.1ms)[0m  [1m[34mSELECT "dogsitters".* FROM "dogsitters"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStroll Create (0.5ms)[0m  [1m[32mINSERT INTO "strolls" ("created_at", "updated_at", "dog_id", "dogsitter_id") VALUES (?, ?, ?, ?)[0m  [["created_at", "2023-05-04 19:35:43.201123"], ["updated_at", "2023-05-04 19:35:43.201123"], ["dog_id", 8], ["dogsitter_id", 3]]
+  [1m[36mTRANSACTION (3.5ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCity Create (0.7ms)[0m  [1m[32mINSERT INTO "cities" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "South Mack"], ["created_at", "2023-05-04 19:35:53.101783"], ["updated_at", "2023-05-04 19:35:53.101783"]]
+  [1m[36mTRANSACTION (1.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCity Create (0.4ms)[0m  [1m[32mINSERT INTO "cities" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Metzmouth"], ["created_at", "2023-05-04 19:35:53.108135"], ["updated_at", "2023-05-04 19:35:53.108135"]]
+  [1m[36mTRANSACTION (1.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCity Create (0.4ms)[0m  [1m[32mINSERT INTO "cities" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "East Markitaside"], ["created_at", "2023-05-04 19:35:53.113782"], ["updated_at", "2023-05-04 19:35:53.113782"]]
+  [1m[36mTRANSACTION (1.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCity Create (0.4ms)[0m  [1m[32mINSERT INTO "cities" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Lake Shawnta"], ["created_at", "2023-05-04 19:35:53.119423"], ["updated_at", "2023-05-04 19:35:53.119423"]]
+  [1m[36mTRANSACTION (2.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mCity Load (0.2ms)[0m  [1m[34mSELECT "cities".* FROM "cities"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mDog Create (0.4ms)[0m  [1m[32mINSERT INTO "dogs" ("name", "created_at", "updated_at", "city_id") VALUES (?, ?, ?, ?)[0m  [["name", "Buford Ankunding Jr."], ["created_at", "2023-05-04 19:35:53.140729"], ["updated_at", "2023-05-04 19:35:53.140729"], ["city_id", 8]]
+  [1m[36mTRANSACTION (2.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mCity Load (0.1ms)[0m  [1m[34mSELECT "cities".* FROM "cities"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mDog Create (0.4ms)[0m  [1m[32mINSERT INTO "dogs" ("name", "created_at", "updated_at", "city_id") VALUES (?, ?, ?, ?)[0m  [["name", "Floyd Dare"], ["created_at", "2023-05-04 19:35:53.148194"], ["updated_at", "2023-05-04 19:35:53.148194"], ["city_id", 2]]
+  [1m[36mTRANSACTION (2.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mCity Load (0.3ms)[0m  [1m[34mSELECT "cities".* FROM "cities"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mDog Create (0.4ms)[0m  [1m[32mINSERT INTO "dogs" ("name", "created_at", "updated_at", "city_id") VALUES (?, ?, ?, ?)[0m  [["name", "Cristopher Auer I"], ["created_at", "2023-05-04 19:35:53.155068"], ["updated_at", "2023-05-04 19:35:53.155068"], ["city_id", 2]]
+  [1m[36mTRANSACTION (1.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mCity Load (0.1ms)[0m  [1m[34mSELECT "cities".* FROM "cities"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mDog Create (0.4ms)[0m  [1m[32mINSERT INTO "dogs" ("name", "created_at", "updated_at", "city_id") VALUES (?, ?, ?, ?)[0m  [["name", "Benedict Schulist"], ["created_at", "2023-05-04 19:35:53.161574"], ["updated_at", "2023-05-04 19:35:53.161574"], ["city_id", 3]]
+  [1m[36mTRANSACTION (2.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mCity Load (0.2ms)[0m  [1m[34mSELECT "cities".* FROM "cities"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mDog Create (0.4ms)[0m  [1m[32mINSERT INTO "dogs" ("name", "created_at", "updated_at", "city_id") VALUES (?, ?, ?, ?)[0m  [["name", "Danika Champlin"], ["created_at", "2023-05-04 19:35:53.169242"], ["updated_at", "2023-05-04 19:35:53.169242"], ["city_id", 5]]
+  [1m[36mTRANSACTION (1.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mCity Load (0.1ms)[0m  [1m[34mSELECT "cities".* FROM "cities"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mDog Create (0.5ms)[0m  [1m[32mINSERT INTO "dogs" ("name", "created_at", "updated_at", "city_id") VALUES (?, ?, ?, ?)[0m  [["name", "Jeff Conn"], ["created_at", "2023-05-04 19:35:53.175477"], ["updated_at", "2023-05-04 19:35:53.175477"], ["city_id", 5]]
+  [1m[36mTRANSACTION (2.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mCity Load (0.1ms)[0m  [1m[34mSELECT "cities".* FROM "cities"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mDog Create (0.4ms)[0m  [1m[32mINSERT INTO "dogs" ("name", "created_at", "updated_at", "city_id") VALUES (?, ?, ?, ?)[0m  [["name", "Ava Dibbert"], ["created_at", "2023-05-04 19:35:53.182356"], ["updated_at", "2023-05-04 19:35:53.182356"], ["city_id", 2]]
+  [1m[36mTRANSACTION (1.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mCity Load (0.1ms)[0m  [1m[34mSELECT "cities".* FROM "cities"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mDog Create (0.5ms)[0m  [1m[32mINSERT INTO "dogs" ("name", "created_at", "updated_at", "city_id") VALUES (?, ?, ?, ?)[0m  [["name", "Breanna Kuvalis"], ["created_at", "2023-05-04 19:35:53.188176"], ["updated_at", "2023-05-04 19:35:53.188176"], ["city_id", 4]]
+  [1m[36mTRANSACTION (2.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mCity Load (0.1ms)[0m  [1m[34mSELECT "cities".* FROM "cities"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mDog Create (0.4ms)[0m  [1m[32mINSERT INTO "dogs" ("name", "created_at", "updated_at", "city_id") VALUES (?, ?, ?, ?)[0m  [["name", "Geoffrey Purdy"], ["created_at", "2023-05-04 19:35:53.195851"], ["updated_at", "2023-05-04 19:35:53.195851"], ["city_id", 5]]
+  [1m[36mTRANSACTION (2.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mCity Load (0.2ms)[0m  [1m[34mSELECT "cities".* FROM "cities"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mDog Create (0.4ms)[0m  [1m[32mINSERT INTO "dogs" ("name", "created_at", "updated_at", "city_id") VALUES (?, ?, ?, ?)[0m  [["name", "Mckinley Grant DVM"], ["created_at", "2023-05-04 19:35:53.203684"], ["updated_at", "2023-05-04 19:35:53.203684"], ["city_id", 3]]
+  [1m[36mTRANSACTION (1.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mCity Load (0.2ms)[0m  [1m[34mSELECT "cities".* FROM "cities"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mDogsitter Create (1.5ms)[0m  [1m[32mINSERT INTO "dogsitters" ("name", "created_at", "updated_at", "city_id") VALUES (?, ?, ?, ?)[0m  [["name", "Lenny Heathcote"], ["created_at", "2023-05-04 19:35:53.217883"], ["updated_at", "2023-05-04 19:35:53.217883"], ["city_id", 2]]
+  [1m[36mTRANSACTION (1.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mCity Load (0.1ms)[0m  [1m[34mSELECT "cities".* FROM "cities"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mDogsitter Create (0.4ms)[0m  [1m[32mINSERT INTO "dogsitters" ("name", "created_at", "updated_at", "city_id") VALUES (?, ?, ?, ?)[0m  [["name", "Jose Hagenes"], ["created_at", "2023-05-04 19:35:53.225669"], ["updated_at", "2023-05-04 19:35:53.225669"], ["city_id", 3]]
+  [1m[36mTRANSACTION (2.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mCity Load (0.1ms)[0m  [1m[34mSELECT "cities".* FROM "cities"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mDogsitter Create (0.4ms)[0m  [1m[32mINSERT INTO "dogsitters" ("name", "created_at", "updated_at", "city_id") VALUES (?, ?, ?, ?)[0m  [["name", "Dagmar Moen"], ["created_at", "2023-05-04 19:35:53.232465"], ["updated_at", "2023-05-04 19:35:53.232465"], ["city_id", 5]]
+  [1m[36mTRANSACTION (3.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mCity Load (0.2ms)[0m  [1m[34mSELECT "cities".* FROM "cities"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mDogsitter Create (0.4ms)[0m  [1m[32mINSERT INTO "dogsitters" ("name", "created_at", "updated_at", "city_id") VALUES (?, ?, ?, ?)[0m  [["name", "Cornell Lehner"], ["created_at", "2023-05-04 19:35:53.240380"], ["updated_at", "2023-05-04 19:35:53.240380"], ["city_id", 7]]
+  [1m[36mTRANSACTION (2.4ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mCity Load (0.1ms)[0m  [1m[34mSELECT "cities".* FROM "cities"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mDogsitter Create (0.4ms)[0m  [1m[32mINSERT INTO "dogsitters" ("name", "created_at", "updated_at", "city_id") VALUES (?, ?, ?, ?)[0m  [["name", "Gov. Consuelo Fritsch"], ["created_at", "2023-05-04 19:35:53.247257"], ["updated_at", "2023-05-04 19:35:53.247257"], ["city_id", 8]]
+  [1m[36mTRANSACTION (2.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mDog Load (0.3ms)[0m  [1m[34mSELECT "dogs".* FROM "dogs"[0m
+  [1m[36mDogsitter Load (0.1ms)[0m  [1m[34mSELECT "dogsitters".* FROM "dogsitters"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStroll Create (0.5ms)[0m  [1m[32mINSERT INTO "strolls" ("created_at", "updated_at", "dog_id", "dogsitter_id") VALUES (?, ?, ?, ?)[0m  [["created_at", "2023-05-04 19:35:53.266007"], ["updated_at", "2023-05-04 19:35:53.266007"], ["dog_id", 15], ["dogsitter_id", 10]]
+  [1m[36mTRANSACTION (2.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mDog Load (0.1ms)[0m  [1m[34mSELECT "dogs".* FROM "dogs"[0m
+  [1m[36mDogsitter Load (0.1ms)[0m  [1m[34mSELECT "dogsitters".* FROM "dogsitters"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStroll Create (0.5ms)[0m  [1m[32mINSERT INTO "strolls" ("created_at", "updated_at", "dog_id", "dogsitter_id") VALUES (?, ?, ?, ?)[0m  [["created_at", "2023-05-04 19:35:53.273091"], ["updated_at", "2023-05-04 19:35:53.273091"], ["dog_id", 19], ["dogsitter_id", 9]]
+  [1m[36mTRANSACTION (2.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mDog Load (0.2ms)[0m  [1m[34mSELECT "dogs".* FROM "dogs"[0m
+  [1m[36mDogsitter Load (0.1ms)[0m  [1m[34mSELECT "dogsitters".* FROM "dogsitters"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStroll Create (0.9ms)[0m  [1m[32mINSERT INTO "strolls" ("created_at", "updated_at", "dog_id", "dogsitter_id") VALUES (?, ?, ?, ?)[0m  [["created_at", "2023-05-04 19:35:53.280549"], ["updated_at", "2023-05-04 19:35:53.280549"], ["dog_id", 2], ["dogsitter_id", 9]]
+  [1m[36mTRANSACTION (2.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mDogsitter Load (0.2ms)[0m  [1m[34mSELECT "dogsitters".* FROM "dogsitters"[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Pluck (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Pluck (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Pluck (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "cities"[0m
+  [1m[35m (3.5ms)[0m  [1m[35mCREATE TABLE "cities" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "dogs"[0m
+  [1m[35m (2.7ms)[0m  [1m[35mCREATE TABLE "dogs" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "city_id" integer)[0m
+  [1m[35m (2.6ms)[0m  [1m[35mCREATE INDEX "index_dogs_on_city_id" ON "dogs" ("city_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "dogsitters"[0m
+  [1m[35m (2.0ms)[0m  [1m[35mCREATE TABLE "dogsitters" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "city_id" integer)[0m
+  [1m[35m (2.1ms)[0m  [1m[35mCREATE INDEX "index_dogsitters_on_city_id" ON "dogsitters" ("city_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "strolls"[0m
+  [1m[35m (1.9ms)[0m  [1m[35mCREATE TABLE "strolls" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "dog_id" integer, "dogsitter_id" integer)[0m
+  [1m[35m (2.3ms)[0m  [1m[35mCREATE INDEX "index_strolls_on_dog_id" ON "strolls" ("dog_id")[0m
+  [1m[35m (2.0ms)[0m  [1m[35mCREATE INDEX "index_strolls_on_dogsitter_id" ON "strolls" ("dogsitter_id")[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TEMPORARY TABLE "adogs" ("id" integer NOT NULL PRIMARY KEY, "name" varchar DEFAULT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "city_id" integer DEFAULT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_adogs_on_city_id" ON "adogs" ("city_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "adogs" ("id","name","created_at","updated_at","city_id")
+                     SELECT "id","name","created_at","updated_at","city_id" FROM "dogs"[0m
+  [1m[35m (0.6ms)[0m  [1m[35mDROP TABLE "dogs"[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "dogs" ("id" integer NOT NULL PRIMARY KEY, "name" varchar DEFAULT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "city_id" integer DEFAULT NULL, CONSTRAINT "fk_rails_84c3bc7ee8"
+FOREIGN KEY ("city_id")
+  REFERENCES "cities" ("id")
+)[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE INDEX "index_dogs_on_city_id" ON "dogs" ("city_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "dogs" ("id","name","created_at","updated_at","city_id")
+                     SELECT "id","name","created_at","updated_at","city_id" FROM "adogs"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "adogs"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (2.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TEMPORARY TABLE "adogsitters" ("id" integer NOT NULL PRIMARY KEY, "name" varchar DEFAULT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "city_id" integer DEFAULT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_adogsitters_on_city_id" ON "adogsitters" ("city_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "adogsitters" ("id","name","created_at","updated_at","city_id")
+                     SELECT "id","name","created_at","updated_at","city_id" FROM "dogsitters"[0m
+  [1m[35m (0.5ms)[0m  [1m[35mDROP TABLE "dogsitters"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "dogsitters" ("id" integer NOT NULL PRIMARY KEY, "name" varchar DEFAULT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "city_id" integer DEFAULT NULL, CONSTRAINT "fk_rails_b74901ccb9"
+FOREIGN KEY ("city_id")
+  REFERENCES "cities" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_dogsitters_on_city_id" ON "dogsitters" ("city_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "dogsitters" ("id","name","created_at","updated_at","city_id")
+                     SELECT "id","name","created_at","updated_at","city_id" FROM "adogsitters"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "adogsitters"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (2.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TEMPORARY TABLE "astrolls" ("id" integer NOT NULL PRIMARY KEY, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "dog_id" integer DEFAULT NULL, "dogsitter_id" integer DEFAULT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_astrolls_on_dogsitter_id" ON "astrolls" ("dogsitter_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_astrolls_on_dog_id" ON "astrolls" ("dog_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "astrolls" ("id","created_at","updated_at","dog_id","dogsitter_id")
+                     SELECT "id","created_at","updated_at","dog_id","dogsitter_id" FROM "strolls"[0m
+  [1m[35m (0.7ms)[0m  [1m[35mDROP TABLE "strolls"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "strolls" ("id" integer NOT NULL PRIMARY KEY, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "dog_id" integer DEFAULT NULL, "dogsitter_id" integer DEFAULT NULL, CONSTRAINT "fk_rails_f5b9745d22"
+FOREIGN KEY ("dog_id")
+  REFERENCES "dogs" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_strolls_on_dog_id" ON "strolls" ("dog_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_strolls_on_dogsitter_id" ON "strolls" ("dogsitter_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "strolls" ("id","created_at","updated_at","dog_id","dogsitter_id")
+                     SELECT "id","created_at","updated_at","dog_id","dogsitter_id" FROM "astrolls"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE "astrolls"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (2.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TEMPORARY TABLE "astrolls" ("id" integer NOT NULL PRIMARY KEY, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "dog_id" integer DEFAULT NULL, "dogsitter_id" integer DEFAULT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_astrolls_on_dogsitter_id" ON "astrolls" ("dogsitter_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_astrolls_on_dog_id" ON "astrolls" ("dog_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "astrolls" ("id","created_at","updated_at","dog_id","dogsitter_id")
+                     SELECT "id","created_at","updated_at","dog_id","dogsitter_id" FROM "strolls"[0m
+  [1m[35m (0.5ms)[0m  [1m[35mDROP TABLE "strolls"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "strolls" ("id" integer NOT NULL PRIMARY KEY, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "dog_id" integer DEFAULT NULL, "dogsitter_id" integer DEFAULT NULL, CONSTRAINT "fk_rails_f5b9745d22"
+FOREIGN KEY ("dog_id")
+  REFERENCES "dogs" ("id")
+, CONSTRAINT "fk_rails_191ec17721"
+FOREIGN KEY ("dogsitter_id")
+  REFERENCES "dogsitters" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_strolls_on_dog_id" ON "strolls" ("dog_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_strolls_on_dogsitter_id" ON "strolls" ("dogsitter_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "strolls" ("id","created_at","updated_at","dog_id","dogsitter_id")
+                     SELECT "id","created_at","updated_at","dog_id","dogsitter_id" FROM "astrolls"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "astrolls"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (2.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (2.3ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (2.6ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (20230504132749)[0m
+  [1m[35m (2.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES
+(20230504125855),
+(20230504125905),
+(20230504125913),
+(20230504130016);
+
+[0m
+  [1m[35m (2.2ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.5ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "development"], ["created_at", "2023-05-04 19:36:30.162178"], ["updated_at", "2023-05-04 19:36:30.162178"]]
+  [1m[36mTRANSACTION (1.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "schema_sha1"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.4ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "schema_sha1"], ["value", "1f5d0c2e6e01c98799cd74c813df34ab2d73abb7"], ["created_at", "2023-05-04 19:36:30.170358"], ["updated_at", "2023-05-04 19:36:30.170358"]]
+  [1m[36mTRANSACTION (2.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "cities"[0m
+  [1m[35m (2.7ms)[0m  [1m[35mCREATE TABLE "cities" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "dogs"[0m
+  [1m[35m (2.4ms)[0m  [1m[35mCREATE TABLE "dogs" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "city_id" integer)[0m
+  [1m[35m (2.3ms)[0m  [1m[35mCREATE INDEX "index_dogs_on_city_id" ON "dogs" ("city_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "dogsitters"[0m
+  [1m[35m (2.2ms)[0m  [1m[35mCREATE TABLE "dogsitters" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "city_id" integer)[0m
+  [1m[35m (2.2ms)[0m  [1m[35mCREATE INDEX "index_dogsitters_on_city_id" ON "dogsitters" ("city_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "strolls"[0m
+  [1m[35m (2.3ms)[0m  [1m[35mCREATE TABLE "strolls" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "dog_id" integer, "dogsitter_id" integer)[0m
+  [1m[35m (2.3ms)[0m  [1m[35mCREATE INDEX "index_strolls_on_dog_id" ON "strolls" ("dog_id")[0m
+  [1m[35m (1.8ms)[0m  [1m[35mCREATE INDEX "index_strolls_on_dogsitter_id" ON "strolls" ("dogsitter_id")[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TEMPORARY TABLE "adogs" ("id" integer NOT NULL PRIMARY KEY, "name" varchar DEFAULT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "city_id" integer DEFAULT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_adogs_on_city_id" ON "adogs" ("city_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "adogs" ("id","name","created_at","updated_at","city_id")
+                     SELECT "id","name","created_at","updated_at","city_id" FROM "dogs"[0m
+  [1m[35m (0.5ms)[0m  [1m[35mDROP TABLE "dogs"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "dogs" ("id" integer NOT NULL PRIMARY KEY, "name" varchar DEFAULT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "city_id" integer DEFAULT NULL, CONSTRAINT "fk_rails_84c3bc7ee8"
+FOREIGN KEY ("city_id")
+  REFERENCES "cities" ("id")
+)[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE INDEX "index_dogs_on_city_id" ON "dogs" ("city_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "dogs" ("id","name","created_at","updated_at","city_id")
+                     SELECT "id","name","created_at","updated_at","city_id" FROM "adogs"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "adogs"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (2.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TEMPORARY TABLE "adogsitters" ("id" integer NOT NULL PRIMARY KEY, "name" varchar DEFAULT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "city_id" integer DEFAULT NULL)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE INDEX "tindex_adogsitters_on_city_id" ON "adogsitters" ("city_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "adogsitters" ("id","name","created_at","updated_at","city_id")
+                     SELECT "id","name","created_at","updated_at","city_id" FROM "dogsitters"[0m
+  [1m[35m (0.7ms)[0m  [1m[35mDROP TABLE "dogsitters"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "dogsitters" ("id" integer NOT NULL PRIMARY KEY, "name" varchar DEFAULT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "city_id" integer DEFAULT NULL, CONSTRAINT "fk_rails_b74901ccb9"
+FOREIGN KEY ("city_id")
+  REFERENCES "cities" ("id")
+)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE INDEX "index_dogsitters_on_city_id" ON "dogsitters" ("city_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "dogsitters" ("id","name","created_at","updated_at","city_id")
+                     SELECT "id","name","created_at","updated_at","city_id" FROM "adogsitters"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "adogsitters"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (1.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TEMPORARY TABLE "astrolls" ("id" integer NOT NULL PRIMARY KEY, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "dog_id" integer DEFAULT NULL, "dogsitter_id" integer DEFAULT NULL)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE INDEX "tindex_astrolls_on_dogsitter_id" ON "astrolls" ("dogsitter_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_astrolls_on_dog_id" ON "astrolls" ("dog_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "astrolls" ("id","created_at","updated_at","dog_id","dogsitter_id")
+                     SELECT "id","created_at","updated_at","dog_id","dogsitter_id" FROM "strolls"[0m
+  [1m[35m (0.6ms)[0m  [1m[35mDROP TABLE "strolls"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "strolls" ("id" integer NOT NULL PRIMARY KEY, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "dog_id" integer DEFAULT NULL, "dogsitter_id" integer DEFAULT NULL, CONSTRAINT "fk_rails_f5b9745d22"
+FOREIGN KEY ("dog_id")
+  REFERENCES "dogs" ("id")
+)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE INDEX "index_strolls_on_dog_id" ON "strolls" ("dog_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_strolls_on_dogsitter_id" ON "strolls" ("dogsitter_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "strolls" ("id","created_at","updated_at","dog_id","dogsitter_id")
+                     SELECT "id","created_at","updated_at","dog_id","dogsitter_id" FROM "astrolls"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "astrolls"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (2.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TEMPORARY TABLE "astrolls" ("id" integer NOT NULL PRIMARY KEY, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "dog_id" integer DEFAULT NULL, "dogsitter_id" integer DEFAULT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_astrolls_on_dogsitter_id" ON "astrolls" ("dogsitter_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_astrolls_on_dog_id" ON "astrolls" ("dog_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "astrolls" ("id","created_at","updated_at","dog_id","dogsitter_id")
+                     SELECT "id","created_at","updated_at","dog_id","dogsitter_id" FROM "strolls"[0m
+  [1m[35m (0.5ms)[0m  [1m[35mDROP TABLE "strolls"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "strolls" ("id" integer NOT NULL PRIMARY KEY, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "dog_id" integer DEFAULT NULL, "dogsitter_id" integer DEFAULT NULL, CONSTRAINT "fk_rails_f5b9745d22"
+FOREIGN KEY ("dog_id")
+  REFERENCES "dogs" ("id")
+, CONSTRAINT "fk_rails_191ec17721"
+FOREIGN KEY ("dogsitter_id")
+  REFERENCES "dogsitters" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_strolls_on_dog_id" ON "strolls" ("dog_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_strolls_on_dogsitter_id" ON "strolls" ("dogsitter_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "strolls" ("id","created_at","updated_at","dog_id","dogsitter_id")
+                     SELECT "id","created_at","updated_at","dog_id","dogsitter_id" FROM "astrolls"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "astrolls"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (2.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (2.3ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (2.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (20230504132749)[0m
+  [1m[35m (2.7ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES
+(20230504125855),
+(20230504125905),
+(20230504125913),
+(20230504130016);
+
+[0m
+  [1m[35m (2.7ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.4ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "development"], ["created_at", "2023-05-04 19:36:30.292612"], ["updated_at", "2023-05-04 19:36:30.292612"]]
+  [1m[36mTRANSACTION (2.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Update (0.4ms)[0m  [1m[33mUPDATE "ar_internal_metadata" SET "value" = ?, "updated_at" = ? WHERE "ar_internal_metadata"."key" = ?[0m  [["value", "test"], ["updated_at", "2023-05-04 19:36:30.299120"], ["key", "environment"]]
+  [1m[36mTRANSACTION (1.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "schema_sha1"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.4ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "schema_sha1"], ["value", "1f5d0c2e6e01c98799cd74c813df34ab2d73abb7"], ["created_at", "2023-05-04 19:36:30.305025"], ["updated_at", "2023-05-04 19:36:30.305025"]]
+  [1m[36mTRANSACTION (2.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCity Create (0.4ms)[0m  [1m[32mINSERT INTO "cities" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Keeshamouth"], ["created_at", "2023-05-04 19:36:30.539320"], ["updated_at", "2023-05-04 19:36:30.539320"]]
+  [1m[36mTRANSACTION (2.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCity Create (0.4ms)[0m  [1m[32mINSERT INTO "cities" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "New Woodrowton"], ["created_at", "2023-05-04 19:36:30.545110"], ["updated_at", "2023-05-04 19:36:30.545110"]]
+  [1m[36mTRANSACTION (1.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCity Create (0.5ms)[0m  [1m[32mINSERT INTO "cities" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Lake Ruthannefort"], ["created_at", "2023-05-04 19:36:30.550351"], ["updated_at", "2023-05-04 19:36:30.550351"]]
+  [1m[36mTRANSACTION (1.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCity Create (0.4ms)[0m  [1m[32mINSERT INTO "cities" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Brekkemouth"], ["created_at", "2023-05-04 19:36:30.556041"], ["updated_at", "2023-05-04 19:36:30.556041"]]
+  [1m[36mTRANSACTION (1.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mCity Load (0.2ms)[0m  [1m[34mSELECT "cities".* FROM "cities"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mDog Create (0.6ms)[0m  [1m[32mINSERT INTO "dogs" ("name", "created_at", "updated_at", "city_id") VALUES (?, ?, ?, ?)[0m  [["name", "Katrina Hammes"], ["created_at", "2023-05-04 19:36:30.578632"], ["updated_at", "2023-05-04 19:36:30.578632"], ["city_id", 3]]
+  [1m[36mTRANSACTION (1.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mCity Load (0.2ms)[0m  [1m[34mSELECT "cities".* FROM "cities"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mDog Create (0.4ms)[0m  [1m[32mINSERT INTO "dogs" ("name", "created_at", "updated_at", "city_id") VALUES (?, ?, ?, ?)[0m  [["name", "Todd Dare"], ["created_at", "2023-05-04 19:36:30.586350"], ["updated_at", "2023-05-04 19:36:30.586350"], ["city_id", 1]]
+  [1m[36mTRANSACTION (2.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mCity Load (0.1ms)[0m  [1m[34mSELECT "cities".* FROM "cities"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mDog Create (0.4ms)[0m  [1m[32mINSERT INTO "dogs" ("name", "created_at", "updated_at", "city_id") VALUES (?, ?, ?, ?)[0m  [["name", "Lorette Rodriguez DO"], ["created_at", "2023-05-04 19:36:30.593138"], ["updated_at", "2023-05-04 19:36:30.593138"], ["city_id", 4]]
+  [1m[36mTRANSACTION (2.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mCity Load (0.1ms)[0m  [1m[34mSELECT "cities".* FROM "cities"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mDog Create (0.5ms)[0m  [1m[32mINSERT INTO "dogs" ("name", "created_at", "updated_at", "city_id") VALUES (?, ?, ?, ?)[0m  [["name", "Claretta Stark"], ["created_at", "2023-05-04 19:36:30.600642"], ["updated_at", "2023-05-04 19:36:30.600642"], ["city_id", 2]]
+  [1m[36mTRANSACTION (1.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mCity Load (0.1ms)[0m  [1m[34mSELECT "cities".* FROM "cities"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mDog Create (0.5ms)[0m  [1m[32mINSERT INTO "dogs" ("name", "created_at", "updated_at", "city_id") VALUES (?, ?, ?, ?)[0m  [["name", "Sidney Konopelski"], ["created_at", "2023-05-04 19:36:30.607921"], ["updated_at", "2023-05-04 19:36:30.607921"], ["city_id", 4]]
+  [1m[36mTRANSACTION (1.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mCity Load (0.1ms)[0m  [1m[34mSELECT "cities".* FROM "cities"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mDog Create (0.4ms)[0m  [1m[32mINSERT INTO "dogs" ("name", "created_at", "updated_at", "city_id") VALUES (?, ?, ?, ?)[0m  [["name", "Rev. Sacha Hermann"], ["created_at", "2023-05-04 19:36:30.614932"], ["updated_at", "2023-05-04 19:36:30.614932"], ["city_id", 3]]
+  [1m[36mTRANSACTION (1.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mCity Load (0.2ms)[0m  [1m[34mSELECT "cities".* FROM "cities"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mDog Create (0.4ms)[0m  [1m[32mINSERT INTO "dogs" ("name", "created_at", "updated_at", "city_id") VALUES (?, ?, ?, ?)[0m  [["name", "Jeffrey Nolan"], ["created_at", "2023-05-04 19:36:30.622006"], ["updated_at", "2023-05-04 19:36:30.622006"], ["city_id", 1]]
+  [1m[36mTRANSACTION (2.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mCity Load (0.2ms)[0m  [1m[34mSELECT "cities".* FROM "cities"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mDog Create (0.6ms)[0m  [1m[32mINSERT INTO "dogs" ("name", "created_at", "updated_at", "city_id") VALUES (?, ?, ?, ?)[0m  [["name", "Amb. Herlinda Roob"], ["created_at", "2023-05-04 19:36:30.629125"], ["updated_at", "2023-05-04 19:36:30.629125"], ["city_id", 2]]
+  [1m[36mTRANSACTION (1.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mCity Load (0.1ms)[0m  [1m[34mSELECT "cities".* FROM "cities"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mDog Create (1.4ms)[0m  [1m[32mINSERT INTO "dogs" ("name", "created_at", "updated_at", "city_id") VALUES (?, ?, ?, ?)[0m  [["name", "Orville Russel"], ["created_at", "2023-05-04 19:36:30.635400"], ["updated_at", "2023-05-04 19:36:30.635400"], ["city_id", 3]]
+  [1m[36mTRANSACTION (2.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mCity Load (0.1ms)[0m  [1m[34mSELECT "cities".* FROM "cities"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mDog Create (0.4ms)[0m  [1m[32mINSERT INTO "dogs" ("name", "created_at", "updated_at", "city_id") VALUES (?, ?, ?, ?)[0m  [["name", "Cleo Schaden"], ["created_at", "2023-05-04 19:36:30.643946"], ["updated_at", "2023-05-04 19:36:30.643946"], ["city_id", 3]]
+  [1m[36mTRANSACTION (2.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mCity Load (0.1ms)[0m  [1m[34mSELECT "cities".* FROM "cities"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mDogsitter Create (0.4ms)[0m  [1m[32mINSERT INTO "dogsitters" ("name", "created_at", "updated_at", "city_id") VALUES (?, ?, ?, ?)[0m  [["name", "Millard Collins"], ["created_at", "2023-05-04 19:36:30.658505"], ["updated_at", "2023-05-04 19:36:30.658505"], ["city_id", 3]]
+  [1m[36mTRANSACTION (2.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mCity Load (0.1ms)[0m  [1m[34mSELECT "cities".* FROM "cities"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mDogsitter Create (0.5ms)[0m  [1m[32mINSERT INTO "dogsitters" ("name", "created_at", "updated_at", "city_id") VALUES (?, ?, ?, ?)[0m  [["name", "Olen Kris"], ["created_at", "2023-05-04 19:36:30.665234"], ["updated_at", "2023-05-04 19:36:30.665234"], ["city_id", 4]]
+  [1m[36mTRANSACTION (1.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mCity Load (0.1ms)[0m  [1m[34mSELECT "cities".* FROM "cities"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mDogsitter Create (0.4ms)[0m  [1m[32mINSERT INTO "dogsitters" ("name", "created_at", "updated_at", "city_id") VALUES (?, ?, ?, ?)[0m  [["name", "Kory Leffler DVM"], ["created_at", "2023-05-04 19:36:30.672788"], ["updated_at", "2023-05-04 19:36:30.672788"], ["city_id", 3]]
+  [1m[36mTRANSACTION (1.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mCity Load (0.2ms)[0m  [1m[34mSELECT "cities".* FROM "cities"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mDogsitter Create (0.4ms)[0m  [1m[32mINSERT INTO "dogsitters" ("name", "created_at", "updated_at", "city_id") VALUES (?, ?, ?, ?)[0m  [["name", "Mr. Clemente Conroy"], ["created_at", "2023-05-04 19:36:30.679569"], ["updated_at", "2023-05-04 19:36:30.679569"], ["city_id", 4]]
+  [1m[36mTRANSACTION (2.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mCity Load (0.4ms)[0m  [1m[34mSELECT "cities".* FROM "cities"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mDogsitter Create (0.8ms)[0m  [1m[32mINSERT INTO "dogsitters" ("name", "created_at", "updated_at", "city_id") VALUES (?, ?, ?, ?)[0m  [["name", "Bridgett Franecki"], ["created_at", "2023-05-04 19:36:30.688582"], ["updated_at", "2023-05-04 19:36:30.688582"], ["city_id", 4]]
+  [1m[36mTRANSACTION (2.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mDog Load (0.2ms)[0m  [1m[34mSELECT "dogs".* FROM "dogs"[0m
+  [1m[36mDogsitter Load (0.1ms)[0m  [1m[34mSELECT "dogsitters".* FROM "dogsitters"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStroll Create (0.5ms)[0m  [1m[32mINSERT INTO "strolls" ("created_at", "updated_at", "dog_id", "dogsitter_id") VALUES (?, ?, ?, ?)[0m  [["created_at", "2023-05-04 19:36:30.708830"], ["updated_at", "2023-05-04 19:36:30.708830"], ["dog_id", 10], ["dogsitter_id", 5]]
+  [1m[36mTRANSACTION (2.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mDog Load (0.2ms)[0m  [1m[34mSELECT "dogs".* FROM "dogs"[0m
+  [1m[36mDogsitter Load (0.1ms)[0m  [1m[34mSELECT "dogsitters".* FROM "dogsitters"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStroll Create (0.5ms)[0m  [1m[32mINSERT INTO "strolls" ("created_at", "updated_at", "dog_id", "dogsitter_id") VALUES (?, ?, ?, ?)[0m  [["created_at", "2023-05-04 19:36:30.716313"], ["updated_at", "2023-05-04 19:36:30.716313"], ["dog_id", 9], ["dogsitter_id", 3]]
+  [1m[36mTRANSACTION (1.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mDog Load (0.2ms)[0m  [1m[34mSELECT "dogs".* FROM "dogs"[0m
+  [1m[36mDogsitter Load (0.1ms)[0m  [1m[34mSELECT "dogsitters".* FROM "dogsitters"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStroll Create (0.7ms)[0m  [1m[32mINSERT INTO "strolls" ("created_at", "updated_at", "dog_id", "dogsitter_id") VALUES (?, ?, ?, ?)[0m  [["created_at", "2023-05-04 19:36:30.723424"], ["updated_at", "2023-05-04 19:36:30.723424"], ["dog_id", 7], ["dogsitter_id", 4]]
+  [1m[36mTRANSACTION (2.4ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (2.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Pluck (49.0ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Pluck (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Pluck (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "cities"[0m
+  [1m[35m (3.0ms)[0m  [1m[35mCREATE TABLE "cities" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "dogs"[0m
+  [1m[35m (2.2ms)[0m  [1m[35mCREATE TABLE "dogs" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "city_id" integer)[0m
+  [1m[35m (2.1ms)[0m  [1m[35mCREATE INDEX "index_dogs_on_city_id" ON "dogs" ("city_id")[0m
+  [1m[35m (0.3ms)[0m  [1m[35mDROP TABLE IF EXISTS "dogsitters"[0m
+  [1m[35m (2.9ms)[0m  [1m[35mCREATE TABLE "dogsitters" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "city_id" integer)[0m
+  [1m[35m (2.1ms)[0m  [1m[35mCREATE INDEX "index_dogsitters_on_city_id" ON "dogsitters" ("city_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "strolls"[0m
+  [1m[35m (2.3ms)[0m  [1m[35mCREATE TABLE "strolls" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "dog_id" integer, "dogsitter_id" integer)[0m
+  [1m[35m (2.5ms)[0m  [1m[35mCREATE INDEX "index_strolls_on_dog_id" ON "strolls" ("dog_id")[0m
+  [1m[35m (1.9ms)[0m  [1m[35mCREATE INDEX "index_strolls_on_dogsitter_id" ON "strolls" ("dogsitter_id")[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TEMPORARY TABLE "adogs" ("id" integer NOT NULL PRIMARY KEY, "name" varchar DEFAULT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "city_id" integer DEFAULT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_adogs_on_city_id" ON "adogs" ("city_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "adogs" ("id","name","created_at","updated_at","city_id")
+                     SELECT "id","name","created_at","updated_at","city_id" FROM "dogs"[0m
+  [1m[35m (0.6ms)[0m  [1m[35mDROP TABLE "dogs"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "dogs" ("id" integer NOT NULL PRIMARY KEY, "name" varchar DEFAULT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "city_id" integer DEFAULT NULL, CONSTRAINT "fk_rails_84c3bc7ee8"
+FOREIGN KEY ("city_id")
+  REFERENCES "cities" ("id")
+)[0m
+  [1m[35m (1.2ms)[0m  [1m[35mCREATE INDEX "index_dogs_on_city_id" ON "dogs" ("city_id")[0m
+  [1m[35m (0.3ms)[0m  [1m[32mINSERT INTO "dogs" ("id","name","created_at","updated_at","city_id")
+                     SELECT "id","name","created_at","updated_at","city_id" FROM "adogs"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE "adogs"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (11.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TEMPORARY TABLE "adogsitters" ("id" integer NOT NULL PRIMARY KEY, "name" varchar DEFAULT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "city_id" integer DEFAULT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_adogsitters_on_city_id" ON "adogsitters" ("city_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "adogsitters" ("id","name","created_at","updated_at","city_id")
+                     SELECT "id","name","created_at","updated_at","city_id" FROM "dogsitters"[0m
+  [1m[35m (0.6ms)[0m  [1m[35mDROP TABLE "dogsitters"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "dogsitters" ("id" integer NOT NULL PRIMARY KEY, "name" varchar DEFAULT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "city_id" integer DEFAULT NULL, CONSTRAINT "fk_rails_b74901ccb9"
+FOREIGN KEY ("city_id")
+  REFERENCES "cities" ("id")
+)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE INDEX "index_dogsitters_on_city_id" ON "dogsitters" ("city_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "dogsitters" ("id","name","created_at","updated_at","city_id")
+                     SELECT "id","name","created_at","updated_at","city_id" FROM "adogsitters"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "adogsitters"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (6.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TEMPORARY TABLE "astrolls" ("id" integer NOT NULL PRIMARY KEY, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "dog_id" integer DEFAULT NULL, "dogsitter_id" integer DEFAULT NULL)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE INDEX "tindex_astrolls_on_dogsitter_id" ON "astrolls" ("dogsitter_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_astrolls_on_dog_id" ON "astrolls" ("dog_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "astrolls" ("id","created_at","updated_at","dog_id","dogsitter_id")
+                     SELECT "id","created_at","updated_at","dog_id","dogsitter_id" FROM "strolls"[0m
+  [1m[35m (0.7ms)[0m  [1m[35mDROP TABLE "strolls"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "strolls" ("id" integer NOT NULL PRIMARY KEY, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "dog_id" integer DEFAULT NULL, "dogsitter_id" integer DEFAULT NULL, CONSTRAINT "fk_rails_f5b9745d22"
+FOREIGN KEY ("dog_id")
+  REFERENCES "dogs" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_strolls_on_dog_id" ON "strolls" ("dog_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE INDEX "index_strolls_on_dogsitter_id" ON "strolls" ("dogsitter_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "strolls" ("id","created_at","updated_at","dog_id","dogsitter_id")
+                     SELECT "id","created_at","updated_at","dog_id","dogsitter_id" FROM "astrolls"[0m
+  [1m[35m (0.3ms)[0m  [1m[35mDROP TABLE "astrolls"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (14.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.4ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TEMPORARY TABLE "astrolls" ("id" integer NOT NULL PRIMARY KEY, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "dog_id" integer DEFAULT NULL, "dogsitter_id" integer DEFAULT NULL)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE INDEX "tindex_astrolls_on_dogsitter_id" ON "astrolls" ("dogsitter_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE INDEX "tindex_astrolls_on_dog_id" ON "astrolls" ("dog_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[32mINSERT INTO "astrolls" ("id","created_at","updated_at","dog_id","dogsitter_id")
+                     SELECT "id","created_at","updated_at","dog_id","dogsitter_id" FROM "strolls"[0m
+  [1m[35m (0.7ms)[0m  [1m[35mDROP TABLE "strolls"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "strolls" ("id" integer NOT NULL PRIMARY KEY, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "dog_id" integer DEFAULT NULL, "dogsitter_id" integer DEFAULT NULL, CONSTRAINT "fk_rails_f5b9745d22"
+FOREIGN KEY ("dog_id")
+  REFERENCES "dogs" ("id")
+, CONSTRAINT "fk_rails_191ec17721"
+FOREIGN KEY ("dogsitter_id")
+  REFERENCES "dogsitters" ("id")
+)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE INDEX "index_strolls_on_dog_id" ON "strolls" ("dog_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE INDEX "index_strolls_on_dogsitter_id" ON "strolls" ("dogsitter_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "strolls" ("id","created_at","updated_at","dog_id","dogsitter_id")
+                     SELECT "id","created_at","updated_at","dog_id","dogsitter_id" FROM "astrolls"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE "astrolls"[0m
+  [1m[35m (14.6ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (3.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (4.4ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (13.2ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (21.5ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (20230504132749)[0m
+  [1m[35m (30.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES
+(20230504125855),
+(20230504125905),
+(20230504125913),
+(20230504130016);
+
+[0m
+  [1m[35m (34.8ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.8ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.5ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "development"], ["created_at", "2023-05-04 19:42:21.222637"], ["updated_at", "2023-05-04 19:42:21.222637"]]
+  [1m[36mTRANSACTION (1.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "schema_sha1"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.5ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "schema_sha1"], ["value", "1f5d0c2e6e01c98799cd74c813df34ab2d73abb7"], ["created_at", "2023-05-04 19:42:21.231991"], ["updated_at", "2023-05-04 19:42:21.231991"]]
+  [1m[36mTRANSACTION (1.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "cities"[0m
+  [1m[35m (7.6ms)[0m  [1m[35mCREATE TABLE "cities" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "dogs"[0m
+  [1m[35m (2.0ms)[0m  [1m[35mCREATE TABLE "dogs" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "city_id" integer)[0m
+  [1m[35m (3.8ms)[0m  [1m[35mCREATE INDEX "index_dogs_on_city_id" ON "dogs" ("city_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "dogsitters"[0m
+  [1m[35m (6.1ms)[0m  [1m[35mCREATE TABLE "dogsitters" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "city_id" integer)[0m
+  [1m[35m (2.5ms)[0m  [1m[35mCREATE INDEX "index_dogsitters_on_city_id" ON "dogsitters" ("city_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "strolls"[0m
+  [1m[35m (1.9ms)[0m  [1m[35mCREATE TABLE "strolls" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "dog_id" integer, "dogsitter_id" integer)[0m
+  [1m[35m (1.9ms)[0m  [1m[35mCREATE INDEX "index_strolls_on_dog_id" ON "strolls" ("dog_id")[0m
+  [1m[35m (3.1ms)[0m  [1m[35mCREATE INDEX "index_strolls_on_dogsitter_id" ON "strolls" ("dogsitter_id")[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TEMPORARY TABLE "adogs" ("id" integer NOT NULL PRIMARY KEY, "name" varchar DEFAULT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "city_id" integer DEFAULT NULL)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE INDEX "tindex_adogs_on_city_id" ON "adogs" ("city_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "adogs" ("id","name","created_at","updated_at","city_id")
+                     SELECT "id","name","created_at","updated_at","city_id" FROM "dogs"[0m
+  [1m[35m (0.5ms)[0m  [1m[35mDROP TABLE "dogs"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "dogs" ("id" integer NOT NULL PRIMARY KEY, "name" varchar DEFAULT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "city_id" integer DEFAULT NULL, CONSTRAINT "fk_rails_84c3bc7ee8"
+FOREIGN KEY ("city_id")
+  REFERENCES "cities" ("id")
+)[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE INDEX "index_dogs_on_city_id" ON "dogs" ("city_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "dogs" ("id","name","created_at","updated_at","city_id")
+                     SELECT "id","name","created_at","updated_at","city_id" FROM "adogs"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "adogs"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (1.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE TEMPORARY TABLE "adogsitters" ("id" integer NOT NULL PRIMARY KEY, "name" varchar DEFAULT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "city_id" integer DEFAULT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_adogsitters_on_city_id" ON "adogsitters" ("city_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "adogsitters" ("id","name","created_at","updated_at","city_id")
+                     SELECT "id","name","created_at","updated_at","city_id" FROM "dogsitters"[0m
+  [1m[35m (0.6ms)[0m  [1m[35mDROP TABLE "dogsitters"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "dogsitters" ("id" integer NOT NULL PRIMARY KEY, "name" varchar DEFAULT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "city_id" integer DEFAULT NULL, CONSTRAINT "fk_rails_b74901ccb9"
+FOREIGN KEY ("city_id")
+  REFERENCES "cities" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_dogsitters_on_city_id" ON "dogsitters" ("city_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "dogsitters" ("id","name","created_at","updated_at","city_id")
+                     SELECT "id","name","created_at","updated_at","city_id" FROM "adogsitters"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE "adogsitters"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (4.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TEMPORARY TABLE "astrolls" ("id" integer NOT NULL PRIMARY KEY, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "dog_id" integer DEFAULT NULL, "dogsitter_id" integer DEFAULT NULL)[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE INDEX "tindex_astrolls_on_dogsitter_id" ON "astrolls" ("dogsitter_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_astrolls_on_dog_id" ON "astrolls" ("dog_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "astrolls" ("id","created_at","updated_at","dog_id","dogsitter_id")
+                     SELECT "id","created_at","updated_at","dog_id","dogsitter_id" FROM "strolls"[0m
+  [1m[35m (0.7ms)[0m  [1m[35mDROP TABLE "strolls"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "strolls" ("id" integer NOT NULL PRIMARY KEY, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "dog_id" integer DEFAULT NULL, "dogsitter_id" integer DEFAULT NULL, CONSTRAINT "fk_rails_f5b9745d22"
+FOREIGN KEY ("dog_id")
+  REFERENCES "dogs" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_strolls_on_dog_id" ON "strolls" ("dog_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE INDEX "index_strolls_on_dogsitter_id" ON "strolls" ("dogsitter_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "strolls" ("id","created_at","updated_at","dog_id","dogsitter_id")
+                     SELECT "id","created_at","updated_at","dog_id","dogsitter_id" FROM "astrolls"[0m
+  [1m[35m (0.4ms)[0m  [1m[35mDROP TABLE "astrolls"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (2.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.6ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE TEMPORARY TABLE "astrolls" ("id" integer NOT NULL PRIMARY KEY, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "dog_id" integer DEFAULT NULL, "dogsitter_id" integer DEFAULT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_astrolls_on_dogsitter_id" ON "astrolls" ("dogsitter_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_astrolls_on_dog_id" ON "astrolls" ("dog_id")[0m
+  [1m[35m (31.0ms)[0m  [1m[32mINSERT INTO "astrolls" ("id","created_at","updated_at","dog_id","dogsitter_id")
+                     SELECT "id","created_at","updated_at","dog_id","dogsitter_id" FROM "strolls"[0m
+  [1m[35m (6.2ms)[0m  [1m[35mDROP TABLE "strolls"[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "strolls" ("id" integer NOT NULL PRIMARY KEY, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "dog_id" integer DEFAULT NULL, "dogsitter_id" integer DEFAULT NULL, CONSTRAINT "fk_rails_f5b9745d22"
+FOREIGN KEY ("dog_id")
+  REFERENCES "dogs" ("id")
+, CONSTRAINT "fk_rails_191ec17721"
+FOREIGN KEY ("dogsitter_id")
+  REFERENCES "dogsitters" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_strolls_on_dog_id" ON "strolls" ("dog_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_strolls_on_dogsitter_id" ON "strolls" ("dogsitter_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "strolls" ("id","created_at","updated_at","dog_id","dogsitter_id")
+                     SELECT "id","created_at","updated_at","dog_id","dogsitter_id" FROM "astrolls"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "astrolls"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (3.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (4.1ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (2.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (20230504132749)[0m
+  [1m[35m (4.5ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES
+(20230504125855),
+(20230504125905),
+(20230504125913),
+(20230504130016);
+
+[0m
+  [1m[35m (1.9ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.5ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "development"], ["created_at", "2023-05-04 19:42:21.454611"], ["updated_at", "2023-05-04 19:42:21.454611"]]
+  [1m[36mTRANSACTION (1.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (2.2ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Update (0.4ms)[0m  [1m[33mUPDATE "ar_internal_metadata" SET "value" = ?, "updated_at" = ? WHERE "ar_internal_metadata"."key" = ?[0m  [["value", "test"], ["updated_at", "2023-05-04 19:42:21.464780"], ["key", "environment"]]
+  [1m[36mTRANSACTION (1.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "schema_sha1"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.7ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "schema_sha1"], ["value", "1f5d0c2e6e01c98799cd74c813df34ab2d73abb7"], ["created_at", "2023-05-04 19:42:21.471714"], ["updated_at", "2023-05-04 19:42:21.471714"]]
+  [1m[36mTRANSACTION (3.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCity Create (0.6ms)[0m  [1m[32mINSERT INTO "cities" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Ondrickafort"], ["created_at", "2023-05-04 19:42:22.202030"], ["updated_at", "2023-05-04 19:42:22.202030"]]
+  [1m[36mTRANSACTION (2.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCity Create (0.4ms)[0m  [1m[32mINSERT INTO "cities" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "McDermottborough"], ["created_at", "2023-05-04 19:42:22.207975"], ["updated_at", "2023-05-04 19:42:22.207975"]]
+  [1m[36mTRANSACTION (2.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCity Create (1.9ms)[0m  [1m[32mINSERT INTO "cities" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "South Justinfurt"], ["created_at", "2023-05-04 19:42:22.214296"], ["updated_at", "2023-05-04 19:42:22.214296"]]
+  [1m[36mTRANSACTION (2.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCity Create (0.4ms)[0m  [1m[32mINSERT INTO "cities" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Davisshire"], ["created_at", "2023-05-04 19:42:22.222229"], ["updated_at", "2023-05-04 19:42:22.222229"]]
+  [1m[36mTRANSACTION (2.4ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mCity Load (0.3ms)[0m  [1m[34mSELECT "cities".* FROM "cities"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mDog Create (1.9ms)[0m  [1m[32mINSERT INTO "dogs" ("name", "created_at", "updated_at", "city_id") VALUES (?, ?, ?, ?)[0m  [["name", "Kyra Aufderhar"], ["created_at", "2023-05-04 19:42:22.276857"], ["updated_at", "2023-05-04 19:42:22.276857"], ["city_id", 4]]
+  [1m[36mTRANSACTION (2.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mCity Load (0.1ms)[0m  [1m[34mSELECT "cities".* FROM "cities"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mDog Create (0.4ms)[0m  [1m[32mINSERT INTO "dogs" ("name", "created_at", "updated_at", "city_id") VALUES (?, ?, ?, ?)[0m  [["name", "Msgr. Paris Larson"], ["created_at", "2023-05-04 19:42:22.287343"], ["updated_at", "2023-05-04 19:42:22.287343"], ["city_id", 2]]
+  [1m[36mTRANSACTION (1.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mCity Load (0.1ms)[0m  [1m[34mSELECT "cities".* FROM "cities"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mDog Create (0.4ms)[0m  [1m[32mINSERT INTO "dogs" ("name", "created_at", "updated_at", "city_id") VALUES (?, ?, ?, ?)[0m  [["name", "Chuck Moen"], ["created_at", "2023-05-04 19:42:22.293218"], ["updated_at", "2023-05-04 19:42:22.293218"], ["city_id", 4]]
+  [1m[36mTRANSACTION (2.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mCity Load (0.1ms)[0m  [1m[34mSELECT "cities".* FROM "cities"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mDog Create (0.4ms)[0m  [1m[32mINSERT INTO "dogs" ("name", "created_at", "updated_at", "city_id") VALUES (?, ?, ?, ?)[0m  [["name", "Ramiro Mayert"], ["created_at", "2023-05-04 19:42:22.299700"], ["updated_at", "2023-05-04 19:42:22.299700"], ["city_id", 2]]
+  [1m[36mTRANSACTION (2.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mCity Load (0.1ms)[0m  [1m[34mSELECT "cities".* FROM "cities"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mDog Create (0.4ms)[0m  [1m[32mINSERT INTO "dogs" ("name", "created_at", "updated_at", "city_id") VALUES (?, ?, ?, ?)[0m  [["name", "Mr. Jaime Hirthe"], ["created_at", "2023-05-04 19:42:22.306306"], ["updated_at", "2023-05-04 19:42:22.306306"], ["city_id", 4]]
+  [1m[36mTRANSACTION (1.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mCity Load (0.1ms)[0m  [1m[34mSELECT "cities".* FROM "cities"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mDog Create (0.4ms)[0m  [1m[32mINSERT INTO "dogs" ("name", "created_at", "updated_at", "city_id") VALUES (?, ?, ?, ?)[0m  [["name", "Dusty Stroman"], ["created_at", "2023-05-04 19:42:22.312483"], ["updated_at", "2023-05-04 19:42:22.312483"], ["city_id", 3]]
+  [1m[36mTRANSACTION (2.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mCity Load (0.1ms)[0m  [1m[34mSELECT "cities".* FROM "cities"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mDog Create (0.5ms)[0m  [1m[32mINSERT INTO "dogs" ("name", "created_at", "updated_at", "city_id") VALUES (?, ?, ?, ?)[0m  [["name", "Chante Feil"], ["created_at", "2023-05-04 19:42:22.318780"], ["updated_at", "2023-05-04 19:42:22.318780"], ["city_id", 3]]
+  [1m[36mTRANSACTION (1.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mCity Load (0.1ms)[0m  [1m[34mSELECT "cities".* FROM "cities"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mDog Create (0.4ms)[0m  [1m[32mINSERT INTO "dogs" ("name", "created_at", "updated_at", "city_id") VALUES (?, ?, ?, ?)[0m  [["name", "Octavia Cummerata"], ["created_at", "2023-05-04 19:42:22.325728"], ["updated_at", "2023-05-04 19:42:22.325728"], ["city_id", 4]]
+  [1m[36mTRANSACTION (2.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mCity Load (0.1ms)[0m  [1m[34mSELECT "cities".* FROM "cities"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mDog Create (0.4ms)[0m  [1m[32mINSERT INTO "dogs" ("name", "created_at", "updated_at", "city_id") VALUES (?, ?, ?, ?)[0m  [["name", "Chanell Schinner CPA"], ["created_at", "2023-05-04 19:42:22.332986"], ["updated_at", "2023-05-04 19:42:22.332986"], ["city_id", 4]]
+  [1m[36mTRANSACTION (1.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mCity Load (0.1ms)[0m  [1m[34mSELECT "cities".* FROM "cities"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mDog Create (0.4ms)[0m  [1m[32mINSERT INTO "dogs" ("name", "created_at", "updated_at", "city_id") VALUES (?, ?, ?, ?)[0m  [["name", "Mae Krajcik"], ["created_at", "2023-05-04 19:42:22.339787"], ["updated_at", "2023-05-04 19:42:22.339787"], ["city_id", 3]]
+  [1m[36mTRANSACTION (2.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mCity Load (0.1ms)[0m  [1m[34mSELECT "cities".* FROM "cities"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mDogsitter Create (0.5ms)[0m  [1m[32mINSERT INTO "dogsitters" ("name", "created_at", "updated_at", "city_id") VALUES (?, ?, ?, ?)[0m  [["name", "Miss Xuan Schowalter"], ["created_at", "2023-05-04 19:42:22.356412"], ["updated_at", "2023-05-04 19:42:22.356412"], ["city_id", 4]]
+  [1m[36mTRANSACTION (1.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mCity Load (0.1ms)[0m  [1m[34mSELECT "cities".* FROM "cities"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mDogsitter Create (0.4ms)[0m  [1m[32mINSERT INTO "dogsitters" ("name", "created_at", "updated_at", "city_id") VALUES (?, ?, ?, ?)[0m  [["name", "Nickie Ebert"], ["created_at", "2023-05-04 19:42:22.362904"], ["updated_at", "2023-05-04 19:42:22.362904"], ["city_id", 4]]
+  [1m[36mTRANSACTION (2.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mCity Load (0.2ms)[0m  [1m[34mSELECT "cities".* FROM "cities"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mDogsitter Create (0.4ms)[0m  [1m[32mINSERT INTO "dogsitters" ("name", "created_at", "updated_at", "city_id") VALUES (?, ?, ?, ?)[0m  [["name", "Bernardina Towne"], ["created_at", "2023-05-04 19:42:22.370272"], ["updated_at", "2023-05-04 19:42:22.370272"], ["city_id", 4]]
+  [1m[36mTRANSACTION (1.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mCity Load (0.1ms)[0m  [1m[34mSELECT "cities".* FROM "cities"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mDogsitter Create (0.5ms)[0m  [1m[32mINSERT INTO "dogsitters" ("name", "created_at", "updated_at", "city_id") VALUES (?, ?, ?, ?)[0m  [["name", "Augustine Schroeder"], ["created_at", "2023-05-04 19:42:22.376419"], ["updated_at", "2023-05-04 19:42:22.376419"], ["city_id", 4]]
+  [1m[36mTRANSACTION (2.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mCity Load (0.4ms)[0m  [1m[34mSELECT "cities".* FROM "cities"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mDogsitter Create (0.4ms)[0m  [1m[32mINSERT INTO "dogsitters" ("name", "created_at", "updated_at", "city_id") VALUES (?, ?, ?, ?)[0m  [["name", "Sherman Nitzsche II"], ["created_at", "2023-05-04 19:42:22.383723"], ["updated_at", "2023-05-04 19:42:22.383723"], ["city_id", 4]]
+  [1m[36mTRANSACTION (1.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mDog Load (0.2ms)[0m  [1m[34mSELECT "dogs".* FROM "dogs"[0m
+  [1m[36mDogsitter Load (0.1ms)[0m  [1m[34mSELECT "dogsitters".* FROM "dogsitters"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStroll Create (0.5ms)[0m  [1m[32mINSERT INTO "strolls" ("created_at", "updated_at", "dog_id", "dogsitter_id") VALUES (?, ?, ?, ?)[0m  [["created_at", "2023-05-04 19:42:22.406282"], ["updated_at", "2023-05-04 19:42:22.406282"], ["dog_id", 5], ["dogsitter_id", 1]]
+  [1m[36mTRANSACTION (2.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mDog Load (0.1ms)[0m  [1m[34mSELECT "dogs".* FROM "dogs"[0m
+  [1m[36mDogsitter Load (0.1ms)[0m  [1m[34mSELECT "dogsitters".* FROM "dogsitters"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStroll Create (0.5ms)[0m  [1m[32mINSERT INTO "strolls" ("created_at", "updated_at", "dog_id", "dogsitter_id") VALUES (?, ?, ?, ?)[0m  [["created_at", "2023-05-04 19:42:22.414192"], ["updated_at", "2023-05-04 19:42:22.414192"], ["dog_id", 8], ["dogsitter_id", 4]]
+  [1m[36mTRANSACTION (2.5ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mDog Load (0.2ms)[0m  [1m[34mSELECT "dogs".* FROM "dogs"[0m
+  [1m[36mDogsitter Load (0.1ms)[0m  [1m[34mSELECT "dogsitters".* FROM "dogsitters"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStroll Create (0.6ms)[0m  [1m[32mINSERT INTO "strolls" ("created_at", "updated_at", "dog_id", "dogsitter_id") VALUES (?, ?, ?, ?)[0m  [["created_at", "2023-05-04 19:42:22.422170"], ["updated_at", "2023-05-04 19:42:22.422170"], ["dog_id", 5], ["dogsitter_id", 2]]
+  [1m[36mTRANSACTION (2.2ms)[0m  [1m[36mcommit transaction[0m
